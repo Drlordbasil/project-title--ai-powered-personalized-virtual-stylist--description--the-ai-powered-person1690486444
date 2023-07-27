@@ -1,0 +1,5 @@
+The package requirements for this Python program are:
+
+- numpy
+- pandas
+- scikit-learn
