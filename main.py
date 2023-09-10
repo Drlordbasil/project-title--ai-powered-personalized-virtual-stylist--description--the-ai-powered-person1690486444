@@ -71,14 +71,18 @@ class VirtualStylist:
         })
 
     def recommend_outfit(self, user_name):
-        user_index = self.user_profiles[self.user_profiles['Name'] == user_name].index[0]
+        user_index = self.user_profiles[self.user_profiles['Name']
+                                        == user_name].index[0]
 
         count_vectorizer = CountVectorizer()
-        user_vector = count_vectorizer.fit_transform([self.user_profiles.loc[user_index, 'Body Measurements'] + ' ' + self.user_profiles.loc[user_index, 'Style Preferences']])
-        outfit_vectors = count_vectorizer.transform(self.outfit_data['Style'] + ' ' + self.outfit_data['Color'] + ' ' + self.outfit_data['Brand'])
+        user_vector = count_vectorizer.fit_transform(
+            [self.user_profiles.loc[user_index, 'Body Measurements'] + ' ' + self.user_profiles.loc[user_index, 'Style Preferences']])
+        outfit_vectors = count_vectorizer.transform(
+            self.outfit_data['Style'] + ' ' + self.outfit_data['Color'] + ' ' + self.outfit_data['Brand'])
         similarity_scores = cosine_similarity(user_vector, outfit_vectors)[0]
 
-        recommended_outfits = self.outfit_data.iloc[np.argsort(-similarity_scores)][:3]
+        recommended_outfits = self.outfit_data.iloc[np.argsort(
+            -similarity_scores)][:3]
 
         return recommended_outfits
 
@@ -91,13 +95,17 @@ class VirtualStylist:
 def main():
     stylist = VirtualStylist()
 
-    stylist.create_user_profile('Alice', 'Female', 25, ['32-26-36'], ['Casual', 'Boho'])
-    stylist.create_user_profile('Bob', 'Male', 30, ['40-32-38'], ['Formal', 'Classic'])
-    stylist.create_user_profile('Claire', 'Female', 22, ['34-28-38'], ['Girly', 'Vintage'])
+    stylist.create_user_profile('Alice', 'Female', 25, [
+                                '32-26-36'], ['Casual', 'Boho'])
+    stylist.create_user_profile(
+        'Bob', 'Male', 30, ['40-32-38'], ['Formal', 'Classic'])
+    stylist.create_user_profile('Claire', 'Female', 22, [
+                                '34-28-38'], ['Girly', 'Vintage'])
 
     stylist.add_outfit('Outfit 1', 'Boho', 'Blue', 'Zara', 'outfit1.jpg')
     stylist.add_outfit('Outfit 2', 'Classic', 'Black', 'Gucci', 'outfit2.jpg')
-    stylist.add_outfit('Outfit 3', 'Girly', 'Pink', 'Ralph Lauren', 'outfit3.jpg')
+    stylist.add_outfit('Outfit 3', 'Girly', 'Pink',
+                       'Ralph Lauren', 'outfit3.jpg')
 
     stylist.generate_user_profiles()
     stylist.generate_outfit_data()
